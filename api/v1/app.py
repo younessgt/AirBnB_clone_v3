@@ -15,6 +15,11 @@ def close_session(exception):
     storage.close()
 
 
+@app.errorhandler(404)
+def error_handler(e):
+    return {"error": "Not found"}, 404
+
+
 app.register_blueprint(app_views)
 
 if __name__ == "__main__":
