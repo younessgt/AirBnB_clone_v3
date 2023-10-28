@@ -47,14 +47,14 @@ def create_state():
     """ data is a python dictionary """
     if data:
         if 'name' not in data:
-            abort(404, {"Missing name"})
+            abort(400, "Missing name")
         else:
             state = State(**data)
             storage.new(state)
             storage.save()
             return jsonify(state.to_dict()), 201
     else:
-        abort(404, {"Not a JSON"})
+        abort(400, "Not a JSON")
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
@@ -64,7 +64,7 @@ def update_state(state_id):
     if not state_obj:
         abort(404)
     if not request.get_json():
-        abort(404, {"Not a JSON"})
+        abort(400, "Not a JSON")
     for key, value in request.get_json().items():
         if key not in ["id", "state_id", "created_at", "updated_at"]:
             setattr(state_obj, key, value)
