@@ -22,8 +22,7 @@ def get_states_with_id(state_id):
     """Retrieves a State object depending on state_id """
     state_obj = storage.get(State, state_id)
     if state_obj is not None:
-        data_dict = state_obj.to_dict()
-        return jsonify(data_dict)
+        return jsonify(state_obj.to_dict())
     else:
         abort(404)
 
@@ -66,7 +65,7 @@ def update_state(state_id):
         abort(404)
     if not request.get_json():
         abort(404, {"Not a JSON"})
-    for key, value in request.get_json():
+    for key, value in request.get_json().items():
         if key not in ["id", "state_id", "created_at", "updated_at"]:
             setattr(state_obj, key, value)
     storage.save()
