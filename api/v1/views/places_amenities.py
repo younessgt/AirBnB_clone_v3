@@ -54,4 +54,5 @@ def link_amenity_toplace(place_id, amenity_id):
         return jsonify(amenity_obj.to_dict()), 200
 
     place_obj.amenities.append(amenity_obj)
+    storage.save()
     return jsonify(amenity_obj.to_dict()), 201
